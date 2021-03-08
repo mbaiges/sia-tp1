@@ -93,8 +93,6 @@ def start_game():
         results = solve(levels[lvl_chosen], algorithms[alg_chosen]["func"])
         finish_time = datetime.now()
 
-        print("Results:")
-        print(results)
         print("Time: ", finish_time - initial_time)
 
         # prompt answer and stats

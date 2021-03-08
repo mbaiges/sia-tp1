@@ -1,8 +1,8 @@
-from bfs import bfs
+import bfs
 
 def BFS(level):
     print('BFS')
-    return bfs(level)
+    return bfs.bfs(level)
 
 def DFS(level):
 	print('DFS')
@@ -21,7 +21,7 @@ def IDAStar(level):
 
 algorithms = [
     {
-        "name": "Breadth First Search (BFS)",
+        "name": bfs.ALGORITHM_NAME,
         "func": BFS,
     },
     {

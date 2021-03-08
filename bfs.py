@@ -1,4 +1,6 @@
-from common import finished, next_configs
+from common import finished, next_configs, process_results
+
+ALGORITHM_NAME = "Breadth First Search (BFS)"
 
 def unordered_positions_equal(list1, list2):
     still_equal = True
@@ -49,27 +51,33 @@ def bfs(level):
     queue.append(first_node)
     processed = []
 
+    nodes_processed = 0
+
     # mientras que la cola tenga elementos y no gane
 
     won = False
 
     while queue and not won:
+
+        nodes_processed += 1
         
         # saco el primer nodo de la cola
         node = queue.pop(0)
+        #print("Current node: ", node['pos'])
+        
         # agrego este nodo a los nodos procesados
         processed.append(node["pos"])
 
         # primero me fijo si gane
         if(finished(node["pos"]["boxes"], level)):
             # si gane listo
-            print("found solution")
+            print("Found solution!")
             won = True
             
         else:
             # si no gane pido mis movimientos legales
             possible_configs = next_configs(node["pos"], level["smap"])
-            # print("Possible configs: ", possible_configs)
+            #print("Possible configs: ", possible_configs)
 
             children = node["children"]
             
@@ -84,20 +92,14 @@ def bfs(level):
                     }
                     children.append(new_node)
                     queue.append(new_node)
+                    #print("Added move: ", new_node['pos'])
 
-            # print("Used configs: ", processed)
-            # print("Queue is: ", queue)
+            #print("Used configs: ", processed)
+            #print("Queue is: ", queue)
 
     if won:
         path = build_path(node)
-
-        return {
-            'msg': 'Ganaste pibe, bien ahi',
-            'path': path
-        }
+        return process_results(won, smap, node, path, ALGORITHM_NAME, nodes_processed, len(queue))
     else:
-        return {
-            'msg': 'No Ganaste pibe, mal ahi',
-            'path': None
-        }
+        return process_results(won, smap, None, [], ALGORITHM_NAME, nodes_processed, len(queue))
 

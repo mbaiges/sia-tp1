@@ -2,3 +2,4 @@ WALL = 0
 EMPTY = 1
 GOAL = 2
 BOX = 3
+PLAYER = 4
