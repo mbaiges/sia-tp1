@@ -1,17 +1,19 @@
 # import libraries
 
 import numpy as np
-import json
 from datetime import datetime
+from os import listdir
+from os.path import isfile, join
 
 # own libraries
 
 import constants
 from algorithms import algorithms
+import level_parser
 
 # definitions
 
-levels_filename = 'levels.json'
+levels_folder = 'levels'
 
 def solve(level, alg):
     return alg(level)
@@ -32,70 +34,74 @@ def add_finish_boxes(level):
     level["goals"] = finish_pos
 
 def start_game():
-    with open(levels_filename) as levels_file:
-        levels = json.load(levels_file)
+    level_files = [f for f in listdir(levels_folder) if isfile(join(levels_folder, f))]
+    levels = []
 
-        # prompt for level selection
+    for f in listdir(levels_folder):
+        if isfile(join(levels_folder, f)):
+            levels.append(level_parser.process_file(levels_folder + '/' + f))
 
-        lvl_selected = False
+    # prompt for level selection
 
-        while not lvl_selected or not (lvl_chosen >= 1 and lvl_chosen <= len(levels)):
-            if (lvl_selected):
-                error()
-            else:
-                lvl_selected = True
-            print("All levels:")
-            lvl_idx = 0
-            for level in levels:
-                lvl_idx += 1
-                print("%d - %s" % (lvl_idx, level["name"]) )
+    lvl_selected = False
 
-            try:
-                lvl_chosen = int(input("Please select a level: "))
-            except ValueError:
-                lvl_chosen = -1
-       
-        # determine level
-        lvl_chosen -= 1
+    while not lvl_selected or not (lvl_chosen >= 1 and lvl_chosen <= len(levels)):
+        if (lvl_selected):
+            error()
+        else:
+            lvl_selected = True
+        print("All levels:")
+        lvl_idx = 0
+        for level in levels:
+            lvl_idx += 1
+            print("%d - %s" % (lvl_idx, level["name"]) )
 
-        # prompt for algorithm
+        try:
+            lvl_chosen = int(input("Please select a level: "))
+        except ValueError:
+            lvl_chosen = -1
+    
+    # determine level
+    lvl_chosen -= 1
 
-        alg_selected = False
+    # prompt for algorithm
 
-        while not alg_selected or not (alg_chosen >= 1 and alg_chosen <= len(algorithms)):
-            if (alg_selected):
-                error()
-            else:
-                alg_selected = True
-            print("All algorithms:")
-            alg_idx = 0
-            for alg in algorithms:
-                alg_idx += 1
-                print("%d - %s" % (alg_idx, alg["name"]) )
+    alg_selected = False
 
-            try:
-                alg_chosen = int(input("Please select an algorithm: "))
-            except ValueError:
-                alg_chosen = -1
-            
-        alg_chosen -= 1
+    while not alg_selected or not (alg_chosen >= 1 and alg_chosen <= len(algorithms)):
+        if (alg_selected):
+            error()
+        else:
+            alg_selected = True
+        print("All algorithms:")
+        alg_idx = 0
+        for alg in algorithms:
+            alg_idx += 1
+            print("%d - %s" % (alg_idx, alg["name"]) )
 
-        # call solve(level, algorithm)
+        try:
+            alg_chosen = int(input("Please select an algorithm: "))
+        except ValueError:
+            alg_chosen = -1
+        
+    alg_chosen -= 1
 
-        print("All settled! Starting solving level '%s' with algorithm '%s'" % (levels[lvl_chosen]["name"], algorithms[alg_chosen]["name"]))
+    # call solve(level, algorithm)
 
-        # TODO: chequear si deberiamos empezar a contar el tiempo despues de armar las estructuras
-        initial_time = datetime.now()
-        lvl = levels[lvl_chosen]
+    print("All settled! Starting solving level '%s' with algorithm '%s'" % (levels[lvl_chosen]["name"], algorithms[alg_chosen]["name"]))
 
-        add_finish_boxes(levels[lvl_chosen])
+    # TODO: chequear si deberiamos empezar a contar el tiempo despues de armar las estructuras
+    initial_time = datetime.now()
+    lvl = levels[lvl_chosen]
 
-        results = solve(levels[lvl_chosen], algorithms[alg_chosen]["func"])
-        finish_time = datetime.now()
+    add_finish_boxes(levels[lvl_chosen])
 
-        print("Time: ", finish_time - initial_time)
+    results = solve(levels[lvl_chosen], algorithms[alg_chosen]["func"])
+    finish_time = datetime.now()
 
-        # prompt answer and stats
+    print("Time: ", finish_time - initial_time)
+
+    # prompt answer and stats
 
 start_game()
 
