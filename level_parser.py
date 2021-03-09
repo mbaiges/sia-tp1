@@ -1,13 +1,12 @@
+import numpy as np
+
 import constants
+from utils import *
 
 def process_file(txt_file):
     f = open(txt_file, "r")
     
     level_name = f.readline().replace('\n', '')
-
-    data = {}
-
-    data['name'] = level_name
 
     smap = []
 
@@ -18,7 +17,7 @@ def process_file(txt_file):
     players_found = 0
     boxes_found = 0
     goals_found = 0
-    boxes = []
+    boxes = set()
 
     i = 0
     while l:
@@ -27,31 +26,31 @@ def process_file(txt_file):
         for char in l:
             if char == ' ':
                 row.append(constants.EMPTY)
-            if char == '#':
+            elif char == '#':
                 row.append(constants.WALL)
-            if char == 'o':
+            elif char == 'o':
                 goals_found += 1
                 row.append(constants.GOAL)
-            if char == 'x' or char == 'X':
+            elif char == 'x' or char == 'X':
                 boxes_found += 1
-                boxes.append([i, j])
+                boxes.add(Position(i, j))
                 row.append(constants.EMPTY)
-            if char == '^':
+            elif char == '^':
                 players_found += 1
-                player = [i, j]
+                player = Position(i, j)
                 row.append(constants.EMPTY)
-            if char == '%':
+            elif char == '%':
                 boxes_found += 1
-                boxes.append([i, j])
+                boxes.add(Position(i, j))
                 goals_found += 1
                 row.append(constants.GOAL)
-            if char == '$':
+            elif char == '$':
                 players_found += 1
-                player = [i, j]
+                player = Position(i, j)
                 goals_found += 1
                 row.append(constants.GOAL)
-            # elif char != '\n':
-                # raise "Unexpected char '%s' - file '%s'" % (char, txt_file)
+            elif char != '\n':
+                raise "Unexpected char '%s' - file '%s'" % (char, txt_file)
             j += 1
 
         smap.append(row)
@@ -67,14 +66,6 @@ def process_file(txt_file):
     elif boxes_found != goals_found:
         raise "Maps must have the same amount of boxes and goals - file '%s'" % txt_file
 
-    data['start'] = {
-        'player': player,
-        'boxes': boxes
-    }
-
-    data['smap'] = smap
-
-    print(level_name)
-    print(smap)
+    new_level = Level(level_name, Config(player, set(boxes)), np.matrix(smap), set())
     
-    return data
+    return new_level

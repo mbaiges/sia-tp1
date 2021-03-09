@@ -1,15 +1,14 @@
 # import libraries
-
 import numpy as np
 from datetime import datetime
 from os import listdir
 from os.path import isfile, join
 
 # own libraries
-
 import constants
 from algorithms import algorithms
 import level_parser
+from utils import *
 
 # definitions
 
@@ -22,16 +21,12 @@ def error():
 	print('Not a valid entry. Please try again')
 
 def add_finish_boxes(level):
-    finish_pos = []
-
-    smap = level["smap"]
-
-    for i in range(0, len(smap)):
-        for j in range(0, len(smap[0])):
-            if (smap[i][j] == constants.GOAL):
-                finish_pos.append([i, j])
-
-    level["goals"] = finish_pos
+    smap = level.smap
+    print(smap)
+    for i in range(0, smap.shape[0]):
+        for j in range(0, smap.shape[1]):
+            if (smap[i,j] == constants.GOAL):
+                level.goals.add(Position(i,j))
 
 def start_game():
     level_files = [f for f in listdir(levels_folder) if isfile(join(levels_folder, f))]
@@ -54,7 +49,7 @@ def start_game():
         lvl_idx = 0
         for level in levels:
             lvl_idx += 1
-            print("%d - %s" % (lvl_idx, level["name"]) )
+            print("%d - %s" % (lvl_idx, level.name) )
 
         try:
             lvl_chosen = int(input("Please select a level: "))
@@ -88,7 +83,7 @@ def start_game():
 
     # call solve(level, algorithm)
 
-    print("All settled! Starting solving level '%s' with algorithm '%s'" % (levels[lvl_chosen]["name"], algorithms[alg_chosen]["name"]))
+    print("All settled! Starting solving level '%s' with algorithm '%s'" % (levels[lvl_chosen].name, algorithms[alg_chosen]["name"]))
 
     # TODO: chequear si deberiamos empezar a contar el tiempo despues de armar las estructuras
     initial_time = datetime.now()
