@@ -1,39 +1,88 @@
-import pygame, sys, random
+import pygame, sys, random, time
 from pygame.locals import *
+from utils import *
+import math
+import constants
 
-BOARDWIDTH = 4  # number of columns in the board
-BOARDHEIGHT = 4 # number of rows in the board
+WINDOW_SIZE = 800
 
-TILESIZE = 80
+white = (255, 255, 255)
+black = (0, 0, 0)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+brown = (210,105,30)
+light_green = (195, 250, 210)
+light_grey = (214, 214, 214)
+dark_grey = (66, 66, 66)
 
-WINDOWWIDTH = 800
-WINDOWHEIGHT = 600
+colors = {
+    constants.EMPTY: light_grey,
+    constants.WALL: dark_grey,
+    constants.GOAL: light_green,
+    constants.BOX: brown,
+}
 
-FPS = 30
+def draw_tiles(dis, smap, config, block_size):
+    
+    global colors
 
-BLANK = None
+    dis.fill(colors[constants.WALL])
 
-class GameObject:
-    def __init__(self, image, x, y):
-        self.image = image
-        self.pos = image.get_rect().move(x, y)
+    for i in range(0, smap.shape[0]):
+        for j in range(0, smap.shape[1]):
+            tx = i * block_size
+            ty = j * block_size
+            pygame.draw.rect(dis, colors[smap[i,j]], [ty, tx, block_size, block_size])
+
+    player_pos = config.player
+    px = player_pos.x * block_size
+    py = player_pos.y * block_size
+    pygame.draw.rect(dis, blue, [py, px, block_size, block_size])
+
+    boxes = set()
+
+    for box_pos in config.boxes:
+        bx = box_pos.x * block_size
+        by = box_pos.y * block_size 
+        pygame.draw.rect(dis, colors[constants.BOX], [by, bx, block_size, block_size])  
 
 def play(smap, path):
-    screen = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
-    player_img = pygame.image.load('images/player.bmp').convert()
-    box_img = pygame.image.load('images/box.bmp').convert()
-    goal_img = pygame.image.load('images/goal.bmp').convert()
-    background_img = pygame.image.load('images/background.bmp').convert()
+    
+    dis = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
+    pygame.display.set_caption('Sokoban by Dream Team Anal')
+    
+    game_over = False
 
-    box_objects = []
-    player_object = None
+    sq = max(smap.shape[0], smap.shape[1])
+        
+    block_size = math.floor(WINDOW_SIZE/sq)
+    
+    clock = pygame.time.Clock()
+    
+    game_speed = 30
 
-    for pos in path:
-        for box in path.boxes:
-            box_object = GameObject(box_img, box.x, box.y)
-            box_objects.append(box_object)
-        
-        player = pos['player']
-        player_object = GameObject(player_img, player.x, player.y)
-        
-        
+    current_idx = 0
+
+    while not game_over:
+        draw_tiles(dis, smap, path[current_idx], block_size)
+        pygame.display.update()
+        clock.tick(game_speed)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game_over = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    if current_idx > 0:
+                        current_idx -= 1
+                elif event.key == pygame.K_RIGHT: 
+                    if current_idx < len(path) - 1:
+                        current_idx += 1
+                    elif current_idx == len(path) - 1: 
+                        won = True
+                        continue
+    
+    pygame.quit()
+    quit()
+  

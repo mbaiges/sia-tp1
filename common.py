@@ -120,8 +120,8 @@ def process_results(success, smap, node, path, alg, proc_nodes_amt, front_nodes_
     print('Frontier nodes: ', front_nodes_amt)
     print('Solution: ', path)
 
-    # if success:
-    #     visual.play(smap, path)
+    if success:
+        visual.play(smap, path)
 
     return results
                  

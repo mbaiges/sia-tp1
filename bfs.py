@@ -91,8 +91,11 @@ def bfs(level):
             # print("Queue is: ", queue)
 
     if won:
-        path = build_path(node)
-        return process_results(won, smap, node, path, ALGORITHM_NAME, nodes_processed, len(queue))
+        if node.father:
+            path = build_path(node.father)
+        else:
+            path = build_path(node)
+        return process_results(won, smap, node, path, ALGORITHM_NAME, nodes_processed - 1, len(queue))
     else:
-        return process_results(won, smap, None, [], ALGORITHM_NAME, nodes_processed, len(queue))
+        return process_results(won, smap, None, [], ALGORITHM_NAME, nodes_processed - 1, len(queue))
 
