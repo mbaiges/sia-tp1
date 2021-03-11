@@ -28,23 +28,23 @@ def process_file(txt_file):
                 row.append(constants.EMPTY)
             elif char == '#':
                 row.append(constants.WALL)
-            elif char == 'o':
-                goals_found += 1
-                row.append(constants.GOAL)
-            elif char == 'x' or char == 'X':
-                boxes_found += 1
-                boxes.add(Position(i, j))
-                row.append(constants.EMPTY)
-            elif char == '^':
-                players_found += 1
-                player = Position(i, j)
-                row.append(constants.EMPTY)
-            elif char == '%':
-                boxes_found += 1
-                boxes.add(Position(i, j))
+            elif char == '.':
                 goals_found += 1
                 row.append(constants.GOAL)
             elif char == '$':
+                boxes_found += 1
+                boxes.add(Position(i, j))
+                row.append(constants.EMPTY)
+            elif char == '+':
+                players_found += 1
+                player = Position(i, j)
+                row.append(constants.EMPTY)
+            elif char == '*':
+                boxes_found += 1
+                boxes.add(Position(i, j))
+                goals_found += 1
+                row.append(constants.GOAL)
+            elif char == '+':
                 players_found += 1
                 player = Position(i, j)
                 goals_found += 1

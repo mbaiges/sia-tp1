@@ -134,7 +134,7 @@ def simple_printing(smap, positions):
         
     print(positions)
     
-    print("frozen: ", frozenset(positions.boxes))
+    # print("frozen: ", frozenset(positions.boxes))
 
     #create an auxiliar map with box information for faster checks
     for box in positions.boxes:
