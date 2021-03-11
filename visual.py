@@ -49,13 +49,21 @@ def draw_tiles(dis, smap, config, block_size):
 
 def play(smap, path):
     
-    dis = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
-    pygame.display.set_caption('Sokoban by Dream Team Anal')
-    
     game_over = False
+    
+    playing = False
+    playing_speed = 10
+    ticks = 0
 
     sq = max(smap.shape[0], smap.shape[1])
     block_size = math.floor(WINDOW_SIZE/sq)
+
+    dis_width = block_size * smap.shape[1]
+    dis_height = block_size * smap.shape[0]
+
+    dis = pygame.display.set_mode((dis_width, dis_height))
+    pygame.display.set_caption('Sokoban by Dream Team Anal')
+
     clock = pygame.time.Clock()
     game_speed = 60
     current_idx = 0
@@ -82,19 +90,28 @@ def play(smap, path):
         dis.blit(text, (10, 10))
         pygame.display.update()
 
+        if playing:
+            if ticks % playing_speed == 0:
+                if current_idx < len(path) - 1:
+                    current_idx += 1
+                elif current_idx == len(path) - 1:
+                    playing = False
+            ticks += 1
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_over = True
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    game_over = True
+                if event.key == pygame.K_p:
+                    playing = not playing
                 if event.key == pygame.K_LEFT:
                     if current_idx > 0:
                         current_idx -= 1
                 elif event.key == pygame.K_RIGHT: 
                     if current_idx < len(path) - 1:
                         current_idx += 1
-                    elif current_idx == len(path) - 1: 
-                        game_over = True
-                        continue
     
     pygame.quit()
     quit()
