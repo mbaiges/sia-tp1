@@ -35,7 +35,7 @@ def process_file(txt_file):
                 boxes_found += 1
                 boxes.add(Position(i, j))
                 row.append(constants.EMPTY)
-            elif char == '+':
+            elif char == '@':
                 players_found += 1
                 player = Position(i, j)
                 row.append(constants.EMPTY)
@@ -61,10 +61,17 @@ def process_file(txt_file):
     if players_found != 1:
         raise "Maps must have only one player - file '%s'" % txt_file
 
+
     if boxes_found == 0:
         raise "Maps must have at least one box - file '%s'" % txt_file
     elif boxes_found != goals_found:
         raise "Maps must have the same amount of boxes and goals - file '%s'" % txt_file
+
+    max_len = max(map(len, smap))
+
+    for line in smap:
+        for i in range(len(line), max_len):
+            line.append(constants.EMPTY)
 
     new_level = Level(level_name, Config(player, set(boxes)), np.matrix(smap), set())
     
