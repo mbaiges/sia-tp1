@@ -50,7 +50,8 @@ def process_file(txt_file):
                 goals_found += 1
                 row.append(constants.GOAL)
             elif char != '\n':
-                raise "Unexpected char '%s' - file '%s'" % (char, txt_file)
+                print(level_name)
+                #raise "Unexpected char '%s' - file '%s'" % (char, txt_file)
             j += 1
 
         smap.append(row)
