@@ -42,6 +42,10 @@ def dfs(level):
         # saco el primer nodo del stack
         node = stack.pop()
         # print('ITERATION: ', nodes_processed, ' --------------------------------------------------------------')
+        
+        if node.config in processed:
+            continue
+
         # print("Current node: ", node.config)
 
         # agrego este nodo a los nodos procesados
@@ -63,9 +67,7 @@ def dfs(level):
             
             #por cada movimiento legal me fijo si ya tube esta config antes y si no la apendeo a la cola
             # print("Procesed: ===>", processed)
-            for config in possible_configs.difference(processed):
-                # print("Config: +++>", config)
-                # print("Was not in processed")
+            for config in possible_configs:
                 new_node = Node(copy.copy(config), node, [])
                 children.append(new_node)
                 stack.append(new_node)

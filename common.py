@@ -93,8 +93,8 @@ def next_configs(config, smap):
     return configs
 
 def process_results(success, smap, node, path, alg, proc_nodes_amt, front_nodes_amt):
-    for move in path:
-        simple_printing(smap, move)
+    # for move in path:
+    #     simple_printing(smap, move)
 
     if success:
         success_text = 'Success'
@@ -117,7 +117,7 @@ def process_results(success, smap, node, path, alg, proc_nodes_amt, front_nodes_
     print('Cost: ', "Not implemented yet")
     print('Nodes expanded: ', proc_nodes_amt)
     print('Frontier nodes: ', front_nodes_amt)
-    print('Solution: ', path)
+    # print('Solution: ', path)
 
     if success:
         visual.play(smap, path)

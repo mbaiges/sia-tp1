@@ -2,6 +2,7 @@ import copy
 
 from common import finished, next_configs, process_results
 from utils import *
+from hashing import HashTable
 
 ALGORITHM_NAME = "Iterative Deepening Depth First Search (IDDFS)"
 
@@ -21,23 +22,28 @@ def build_path(node):
 def iddfs(level):
     smap = level.smap
 
-    first_node = Node(level.start, None, [], 0)
+    first_node = Node(level.start, None, [], 1)
 
     deque = []
 
     #metemos al nodo inicial en la cola
 
     deque.append(first_node)
-    processed = set()
+    processed = HashTable()
 
     nodes_processed = 0
 
-    n = 10
-    curr_n = n
+    n = 50
+    # curr_n = n
 
     # mientras que la cola tenga elementos y no gane
 
     won = False
+
+    is_on_limit = False
+
+
+    # print("Entering While")
 
     while deque and not won:
         
@@ -45,24 +51,58 @@ def iddfs(level):
         node = deque.pop()
         
         # print('ITERATION: ', nodes_processed, ' --------------------------------------------------------------')
-        # print("Current node: ", node.config)
+        
+        pase = False
+
+        proc_node = processed.get(node.config)
+
+        # if proc_node:
+        if proc_node and node.depth >= proc_node.depth:
+            continue
+
+
+        # if node in processed:
+        #     l = list(processed)
+        #     idx = l.index(node)
+
+        #     if idx >= 0 and idx < len(l):
+        #         proc_node = l[idx]
+        #         if node.depth >= proc_node.depth:
+        #             pase = True
+        #             continue
+        #     else:
+        #         continue
+            
+        
+        if pase:
+            print("Re locardo")
+
+        # print("Current node: ", node)
 
         # agrego este nodo a los nodos procesados
-        processed.add(node.config)
+        processed.put(node.config, node)  
+
+        # print("Added node: ", processed.get(node.config))
     
+        # print('checking node at depth: ', node.depth)
+
         # primero me fijo si gane
         if(finished(node.config.boxes, level)):
+
+            #for nodeinque in deque:
+               # if nodeinque.depth < node.depth:
+                    #print("there were nodes at: ", nodeinque.depth)
+
             # si gane listo
             # print("Found solution!")
             won = True
         else:
             nodes_processed += 1
-
-            if node.depth == curr_n:
-                curr_n += n
-
-            if node.depth == curr_n - n:
-                deque.insert(0, node)
+            
+            if( node.depth % n == 0):
+                is_on_limit = True
+            else:
+                is_on_limit = False
 
             # si no gane pido mis movimientos legales
             possible_configs = next_configs(node.config, level.smap)
@@ -70,14 +110,18 @@ def iddfs(level):
 
             children = node.children
             
-            #por cada movimiento legal me fijo si ya tube esta config antes y si no la apendeo a la cola
-            # print("Procesed: ===>", processed)
-            for config in possible_configs.difference(processed):
-                # print("Config: +++>", config)
-                # print("Was not in processed")
+            for config in possible_configs:
                 new_node = Node(copy.copy(config), node, [], node.depth + 1)
                 children.append(new_node)
-                deque.append(new_node)
+                if is_on_limit:
+                    deque.insert(0, new_node)  
+                    #print('added node at begining', node.depth + 1)
+                else:
+                    deque.append(new_node)    
+                    #print('added node at end', node.depth + 1 )
+
+                
+                
                 # print("Added move: ", new_node.config)
 
             # print("Used configs: ", processed)

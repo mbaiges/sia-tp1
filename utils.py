@@ -6,8 +6,10 @@ class Position:
         self.y = y
 
     def __eq__(self, other):
-        # print("comparing: ", self, " with ", other, " will return ", self.x == other.x and self.y == other.y)
-        return self.x == other.x and self.y == other.y
+        if isinstance(other, Position):
+            return self.x == other.x and self.y == other.y
+        return False
+        
     def __hash__(self):
         # print("hashing pos: ", self)
         return hash((self.x, self.y))
@@ -40,8 +42,10 @@ class Config:
         self.boxes = boxes
 
     def __eq__(self, other):
-        # print("comparing: ", self, " with ", other, " will return ", self.player == other.player and self.boxes == other.boxes)
-        return self.player == other.player and self.boxes == other.boxes
+        if isinstance(other, Config):
+            return self.player == other.player and self.boxes == other.boxes
+        return False
+        
     def __hash__(self):    
         # print("hashing cfg: ", self)
         return hash((self.player, frozenset(self.boxes)))
@@ -74,7 +78,21 @@ class Node:
         self.father = father
         self.children = children
         self.depth = depth
-    
+
+    def __eq__(self, other):
+        if isinstance(other, Node):
+            return self.config == other.config
+        return False
+
+    def __hash__(self):    
+        return hash(self.config)
+
+    def __str__(self):
+        return "<Config: %s, Depth: %d>" % (str(self.config), self.depth)
+
+    def __repr__(self):
+        return "<Config: %s, Depth: %d>" % (str(self.config), self.depth)
+
 
 class Level:
     def __init__(self, name, start, smap, goals):

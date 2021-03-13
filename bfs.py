@@ -59,6 +59,10 @@ def bfs(level):
         
         # saco el primer nodo de la cola
         node = queue.pop(0)
+
+        if node.config in processed:
+            continue
+
         # print("Current node: ", node.config)
 
         # agrego este nodo a los nodos procesados
@@ -81,7 +85,7 @@ def bfs(level):
             
             #por cada movimiento legal me fijo si ya tube esta config antes y si no la apendeo a la cola
             
-            for config in possible_configs.difference(processed):
+            for config in possible_configs:
                 new_node = Node(copy.copy(config), node, [])
                 children.append(new_node)
                 queue.append(new_node)
