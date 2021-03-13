@@ -36,6 +36,8 @@ def iddfs(level):
     n = 50
     # curr_n = n
 
+    # curr_n = n
+
     # mientras que la cola tenga elementos y no gane
 
     won = False
