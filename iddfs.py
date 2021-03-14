@@ -1,4 +1,5 @@
 import copy
+from datetime import datetime
 
 from common import finished, next_configs, process_results
 from utils import *
@@ -19,48 +20,34 @@ def build_path(node):
 
     return path
             
-def iddfs(level):
+def iddfs(level, n):
+    initial_time = datetime.now()
+
     smap = level.smap
 
-    first_node = Node(level.start, None, [], 1)
+    first_node = Node(level.start, None, [], 0)
 
     deque = []
 
     #metemos al nodo inicial en la cola
 
     deque.append(first_node)
-    processed = HashTable()
+    known_nodes = HashTable()
 
     nodes_processed = 0
-
-    n = 50
-    # curr_n = n
 
     # mientras que la cola tenga elementos y no gane
 
     won = False
 
-    is_on_limit = False
-
-
-    # print("Entering While")
+    limit_nodes_per_n = []
+    limit_nodes_per_n_size = 0
 
     while deque and not won:
         
         # saco el primer nodo del stack
         node = deque.pop()
         
-        # print('ITERATION: ', nodes_processed, ' --------------------------------------------------------------')
-        
-        pase = False
-
-        proc_node = processed.get(node.config)
-
-        # if proc_node:
-        if proc_node and node.depth >= proc_node.depth:
-            continue
-
-
         # if node in processed:
         #     l = list(processed)
         #     idx = l.index(node)
@@ -72,48 +59,43 @@ def iddfs(level):
         #             continue
         #     else:
         #         continue
-            
-        
-        if pase:
-            print("Re locardo")
-
-        # print("Current node: ", node)
-
-        # agrego este nodo a los nodos procesados
-        processed.put(node.config, node)  
-
-        # print("Added node: ", processed.get(node.config))
-    
-        # print('checking node at depth: ', node.depth)
 
         # primero me fijo si gane
         if(finished(node.config.boxes, level)):
-
-            #for nodeinque in deque:
-               # if nodeinque.depth < node.depth:
-                    #print("there were nodes at: ", nodeinque.depth)
-
             # si gane listo
-            # print("Found solution!")
             won = True
         else:
             nodes_processed += 1
-            
-            if( node.depth % n == 0):
-                is_on_limit = True
-            else:
-                is_on_limit = False
 
             # si no gane pido mis movimientos legales
             possible_configs = next_configs(node.config, level.smap)
             # print("Possible configs: ", possible_configs)
 
             children = node.children
+
+            if (node.depth + 1) % n == 0:
+                children_at_limit = True
+            else:
+                children_at_limit = False
             
             for config in possible_configs:
+                proc_node = known_nodes.get(config)
+
+                if proc_node and node.depth + 1 >= proc_node.depth:
+                    continue
+
                 new_node = Node(copy.copy(config), node, [], node.depth + 1)
+
+                known_nodes.put(config, new_node)  
+
                 children.append(new_node)
-                if is_on_limit:
+
+                if children_at_limit:
+                    limit_idx = int(new_node.depth / n) - 1
+                    if len(limit_nodes_per_n) < limit_idx + 1:
+                        limit_nodes_per_n.append(0)
+                    limit_nodes_per_n[limit_idx] += 1
+
                     deque.insert(0, new_node)  
                     #print('added node at begining', node.depth + 1)
                 else:
@@ -127,9 +109,15 @@ def iddfs(level):
             # print("Used configs: ", processed)
             # print("deque is: ", deque)
 
+    finish_time = datetime.now()
+
+    elapsed_time = finish_time - initial_time
+
+    print(limit_nodes_per_n)
+
     if won:
         path = build_path(node)
-        return process_results(won, smap, node, path, ALGORITHM_NAME, nodes_processed - 1, len(deque))
+        return process_results(won, elapsed_time, smap, node, path, ALGORITHM_NAME, nodes_processed - 1, len(deque))
     else:
-        return process_results(won, smap, None, [], ALGORITHM_NAME, nodes_processed - 1, len(deque))
+        return process_results(won, elapsed_time, smap, None, [], ALGORITHM_NAME, nodes_processed - 1, len(deque))
 

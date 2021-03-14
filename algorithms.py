@@ -1,19 +1,59 @@
-import bfs, dfs, iddfs
+import bfs, dfs, iddfs, ggs
+
+from heuristics import heuristics
+
+def choose_heuristic():
+    # prompt for algorithm
+
+    heu_selected = False
+
+    while not heu_selected or not (heu_chosen >= 1 and heu_chosen <= len(heuristics)):
+        if (heu_selected):
+            error()
+        else:
+            heu_selected = True
+        print("All heuristics:")
+        heu_idx = 0
+        for heu in heuristics:
+            heu_idx += 1
+            print("%d - %s" % (heu_idx, heu["name"]) )
+
+        try:
+            heu_chosen = int(input("Please select an algorithm: "))
+        except ValueError:
+            heu_chosen = -1
+        
+    heu_chosen -= 1
+
+    return heuristics[heu_chosen]["func"]
 
 def BFS(level):
-    print('BFS')
     return bfs.bfs(level)
 
 def DFS(level):
-    print('DFS')
     return dfs.dfs(level)
 
 def IDDFS(level):
-    print('IDDFS')
-    return iddfs.iddfs(level)
+    # prompt for n
+
+    n_selected = False
+
+    while not n_selected:
+        if (n_selected):
+            error()
+        else:
+            n_selected = True
+
+        try:
+            n_chosen = int(input("Please define N depth for IDDFS: "))
+        except ValueError:
+            n_chosen = -1
+
+    return iddfs.iddfs(level, n_chosen)
 
 def GGS(level):
-	print('GGS')
+    heuristic = choose_heuristic()
+    return ggs.ggs(level, heuristic)
 
 def AStar(level):
 	print('AStar')
@@ -31,11 +71,11 @@ algorithms = [
         "func": DFS,
     },
     {
-        "name": "Iterative Deepening Depth First Search (IDDFS)",
+        "name": iddfs.ALGORITHM_NAME,
         "func": IDDFS,
     },
     {
-        "name": "GGS",
+        "name": ggs.ALGORITHM_NAME,
         "func": GGS,
     },
     {

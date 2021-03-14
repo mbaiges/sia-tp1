@@ -1,9 +1,16 @@
 import copy
+import math
 
 class Position:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
+    def dist1(self, other):
+        return abs(self.x - other.x) + abs(self.y - other.y)
+
+    def dist2(self, other):
+        return math.sqrt(pow(other.x - self.x, 2) + pow(other.y - self.y, 2))
 
     def __eq__(self, other):
         if isinstance(other, Position):
@@ -73,11 +80,12 @@ class Config:
 
 
 class Node:
-    def __init__(self, config, father, children, depth = None):
+    def __init__(self, config, father, children, depth = None, meta = None):
         self.config = config
         self.father = father
         self.children = children
         self.depth = depth
+        self.meta = meta
 
     def __eq__(self, other):
         if isinstance(other, Node):

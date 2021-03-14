@@ -92,7 +92,7 @@ def next_configs(config, smap):
 
     return configs
 
-def process_results(success, smap, node, path, alg, proc_nodes_amt, front_nodes_amt):
+def process_results(success, elapsed_time, smap, node, path, alg, proc_nodes_amt, front_nodes_amt):
     # for move in path:
     #     simple_printing(smap, move)
 
@@ -103,6 +103,7 @@ def process_results(success, smap, node, path, alg, proc_nodes_amt, front_nodes_
     
     results = {
         'algorithm': alg,
+        'time': elapsed_time,
         'result': success,
         'depth': len(path) - 1,
         'cost': "Not implemented yet",
@@ -112,6 +113,7 @@ def process_results(success, smap, node, path, alg, proc_nodes_amt, front_nodes_
     }
     
     print('Algorithm: ', alg)
+    print('Time: ', elapsed_time)
     print('Result: ', success_text)
     print('Depth: ',  len(path) - 1)
     print('Cost: ', "Not implemented yet")

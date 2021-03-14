@@ -1,6 +1,5 @@
 # import libraries
 import numpy as np
-from datetime import datetime
 from os import listdir
 from os.path import isfile, join
 
@@ -81,22 +80,14 @@ def start_game():
         
     alg_chosen -= 1
 
-    # call solve(level, algorithm)
-
     print("All settled! Starting solving level '%s' with algorithm '%s'" % (levels[lvl_chosen].name, algorithms[alg_chosen]["name"]))
 
-    # TODO: chequear si deberiamos empezar a contar el tiempo despues de armar las estructuras
-    initial_time = datetime.now()
     lvl = levels[lvl_chosen]
 
     add_finish_boxes(levels[lvl_chosen])
 
-    results = solve(levels[lvl_chosen], algorithms[alg_chosen]["func"])
-    finish_time = datetime.now()
+    solve(levels[lvl_chosen], algorithms[alg_chosen]["func"])
 
-    print("Time: ", finish_time - initial_time)
-
-    # prompt answer and stats
 
 start_game()
 
