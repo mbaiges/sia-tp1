@@ -1,24 +1,11 @@
 import copy
 from datetime import datetime
 
-from common import finished, next_configs, process_results
+from common import finished, next_configs, process_results, build_path
 from utils import *
 from sorted_list import OrderedList
 
 ALGORITHM_NAME = "Global Greedy Search (GGS)"
-
-def build_path(node):
-    path = []
-
-    n = copy.copy(node)
-
-    while n.father != None:
-        path.insert(0, n.config)
-        n = n.father
-
-    path.insert(0, n.config)
-
-    return path
             
 def ggs(level, h):
     initial_time = datetime.now()
@@ -37,13 +24,15 @@ def ggs(level, h):
     nodes_list.add(first_node)
     known_cfgs = set()
 
+    known_cfgs.add(first_node.config)
+
     nodes_processed = 0
 
     # mientras que la cola tenga elementos y no gane
 
     won = False
 
-    while nodes_list and not won:
+    while nodes_list.length() > 0 and not won:
         
         # saco el primer nodo del nodes_list
         node = nodes_list.pop()

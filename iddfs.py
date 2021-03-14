@@ -1,7 +1,7 @@
 import copy
 from datetime import datetime
 
-from common import finished, next_configs, process_results
+from common import finished, next_configs, process_results, build_path
 from utils import *
 from hashing import HashTable
 
@@ -33,6 +33,8 @@ def iddfs(level, n):
 
     deque.append(first_node)
     known_nodes = HashTable()
+
+    known_nodes.put(first_node.config, first_node)
 
     nodes_processed = 0
 

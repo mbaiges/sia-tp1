@@ -48,7 +48,7 @@ def start_game():
         lvl_idx = 0
         for level in levels:
             lvl_idx += 1
-            print("%d - %s" % (lvl_idx, level.name) )
+            print("%s - %s" % (f'{lvl_idx:03}', level.name) )
 
         try:
             lvl_chosen = int(input("Please select a level: "))

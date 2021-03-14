@@ -6,7 +6,7 @@ from utils import *
 def process_file(txt_file):
     f = open(txt_file, "r")
     
-    level_name = f.readline().replace('\n', '')
+    level_name = txt_file.split('.')[0].split('/')[1]
 
     smap = []
 

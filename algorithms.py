@@ -1,4 +1,4 @@
-import bfs, dfs, iddfs, ggs
+import bfs, dfs, iddfs, ggs, astar, idastar
 
 from heuristics import heuristics
 
@@ -56,10 +56,12 @@ def GGS(level):
     return ggs.ggs(level, heuristic)
 
 def AStar(level):
-	print('AStar')
+    heuristic = choose_heuristic()
+    return astar.astar(level, heuristic)
 
 def IDAStar(level):
-	print('IDAStar')
+    heuristic = choose_heuristic()
+    return idastar.idastar(level, heuristic)
 
 algorithms = [
     {
@@ -79,11 +81,11 @@ algorithms = [
         "func": GGS,
     },
     {
-        "name": "AStar",
+        "name": astar.ALGORITHM_NAME,
         "func": AStar,
     },
     {
-        "name": "IDAStar",
+        "name": idastar.ALGORITHM_NAME,
         "func": IDAStar,
     },
 ]

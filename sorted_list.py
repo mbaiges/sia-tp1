@@ -1,3 +1,5 @@
+import copy
+
 class ListElement:
     def __init__(self, data, next_el = None):
         self.data = data
@@ -61,3 +63,17 @@ class OrderedList:
         
     def length(self):
         return self.size
+
+    def snapshot(self):
+        ret = []
+
+        current = self.head
+        previous = None
+
+        while current != None:
+            ret.append(copy.copy(current))
+
+            previous = current
+            current = current.get_next()
+
+        return ret

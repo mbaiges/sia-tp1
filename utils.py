@@ -87,6 +87,9 @@ class Node:
         self.depth = depth
         self.meta = meta
 
+    def set_meta(self, meta):
+        self.meta = meta
+
     def __eq__(self, other):
         if isinstance(other, Node):
             return self.config == other.config

@@ -126,6 +126,18 @@ def process_results(success, elapsed_time, smap, node, path, alg, proc_nodes_amt
 
     return results
                  
+def build_path(node):
+    path = []
+
+    n = copy.copy(node)
+
+    while n.father != None:
+        path.insert(0, n.config)
+        n = n.father
+
+    path.insert(0, n.config)
+
+    return path
 
 def simple_printing(smap, positions):
 
