@@ -30,18 +30,17 @@ def iddfs(level, n):
     deque = []
 
     #metemos al nodo inicial en la cola
-
     deque.append(first_node)
     known_nodes = HashTable()
 
     known_nodes.put(first_node.config, first_node)
 
     nodes_processed = 0
+    n = 2
 
     # curr_n = n
 
     # mientras que la cola tenga elementos y no gane
-
     won = False
 
     limit_nodes_per_n = []
@@ -73,8 +72,6 @@ def iddfs(level, n):
 
             # si no gane pido mis movimientos legales
             possible_configs = next_configs(node.config, level.smap)
-            # print("Possible configs: ", possible_configs)
-
             children = node.children
 
             if (node.depth + 1) % n == 0:
@@ -101,10 +98,8 @@ def iddfs(level, n):
                     limit_nodes_per_n[limit_idx] += 1
 
                     deque.insert(0, new_node)  
-                    #print('added node at begining', node.depth + 1)
                 else:
                     deque.append(new_node)    
-                    #print('added node at end', node.depth + 1 )
 
                 
                 
