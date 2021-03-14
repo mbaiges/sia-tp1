@@ -4,6 +4,7 @@ from datetime import datetime
 from common import finished, next_configs, process_results, build_path
 from utils import *
 from sorted_list import OrderedList
+from hashing import HashTable
 
 ALGORITHM_NAME = "A*"
             
@@ -30,57 +31,52 @@ def astar(level, h):
 
     nodes_list = OrderedList(cp)
 
-    #metemos al nodo inicial en la cola ( ͡° ͜ʖ ͡°)
-
     nodes_list.add(first_node)
-    known_cfgs = set()
 
-    known_cfgs.add(first_node.config)
+    #known_cfgs = set()
+    known_nodes = HashTable()
+
+    #known_cfgs.add(first_node.config)
+    known_nodes.put(first_node.config, first_node)
 
     nodes_processed = 0
-
-    # mientras que la cola tenga elementos y no gane
 
     won = False
 
     while nodes_list.length() > 0 and not won:
         
-        # saco el primer nodo del nodes_list
         node = nodes_list.pop()
-        # print('ITERATION: ', nodes_processed, ' --------------------------------------------------------------')
 
-        # print("Current node: ", node.config)
-    
-        # primero me fijo si gane
         if(finished(node.config.boxes, level)):
-            # si gane listo
-            # print("Found solution!")
             won = True
         else:
             nodes_processed += 1
 
-            # si no gane pido mis movimientos legales
             possible_configs = next_configs(node.config, level.smap)
-            # print("Possible configs: ", possible_configs)
 
             children = node.children
             
-            #por cada movimiento legal me fijo si ya tube esta config antes y si no la apendeo a la cola
-            # print("Procesed: ===>", processed)
             for config in possible_configs:
 
-                if config in known_cfgs:
-                    continue
+                proc_node = known_nodes.get(config)
+                new_node = Node(copy.copy(config), node, [], node.depth + 1, {'g': node.depth + 1, 'h': h(smap, level.goals, config)})  
 
-                known_cfgs.add(config)
+                if proc_node:
+                    new_node_f = new_node.meta['g']+new_node.meta['h']
+                    proc_node_f = proc_node.meta['g']+proc_node.meta['h']
 
-                new_node = Node(copy.copy(config), node, [], node.depth + 1, {'g': node.depth + 1, 'h': h(smap, level.goals, config)})
+                    if(new_node_f >= proc_node_f):
+                        continue
+
+                # if config in known_cfgs:
+                #     continue
+
+                #known_cfgs.add(config)
+                known_nodes.put(config, new_node)  
+
                 children.append(new_node)
                 nodes_list.add(new_node)
-                # print("Added move: ", new_node.config)
 
-            # print("Used configs: ", processed)
-            # print("Stack is: ", stack)
 
     finish_time = datetime.now()
 
