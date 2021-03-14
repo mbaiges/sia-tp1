@@ -104,6 +104,8 @@ def play(smap, path):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     game_over = True
+                if event.key == pygame.K_r:
+                    current_idx = 0
                 if event.key == pygame.K_p:
                     playing = not playing
                 if event.key == pygame.K_LEFT:
@@ -114,4 +116,4 @@ def play(smap, path):
                         current_idx += 1
     
     pygame.quit()
-    quit()
+    return
