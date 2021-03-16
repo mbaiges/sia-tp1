@@ -62,7 +62,7 @@ def play(smap, path):
     dis_height = block_size * smap.shape[0]
 
     dis = pygame.display.set_mode((dis_width, dis_height))
-    pygame.display.set_caption('Sokoban by Dream Team Anal')
+    pygame.display.set_caption('Sokoban by Baiges, Bilevich & Margossian')
 
     clock = pygame.time.Clock()
     game_speed = 60

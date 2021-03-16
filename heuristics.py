@@ -1,38 +1,33 @@
 import copy
 import math
+
 from hashing import HashTable
 from sorted_list import OrderedList
 
 def h1(smap, goals, cfg):
-    box_goal_matches = []
 
-    boxes = list(cfg.boxes)
-    remaining_goals = list(goals)
     nearest_box = None
     nearest_box_dist = 0
 
-    dist_sum = 0
-
     for box in cfg.boxes:
-        i = 0
-        nearest_idx = -1
-
-        for goal in remaining_goals:
-            if nearest_idx == -1 or goal.dist2(box) < remaining_goals[nearest_idx].dist2(box):
-                nearest_idx = i
-            i += 1
 
         dist = box.dist1(cfg.player)
 
-        if not nearest_box or (box.dist1(remaining_goals[nearest_idx]) > 0 and dist < nearest_box_dist):
+        if not nearest_box or dist < nearest_box_dist:
             nearest_box_dist = dist
             nearest_box = box
 
-        box_goal_matches.append((box, remaining_goals[nearest_idx]))
-        dist_sum += box.dist1(remaining_goals[nearest_idx])
-        remaining_goals.pop(nearest_idx)
+    nearest_goal_from_box = None
+    nearest_goal_from_box_dist = 0
 
-    return cfg.player.dist1(nearest_box) + dist_sum
+    for goal in goals:
+        dist = nearest_box.dist1(goal)
+
+        if not nearest_goal_from_box or dist < nearest_goal_from_box_dist:
+            nearest_goal_from_box_dist = dist
+            nearest_goal_from_box = goal
+
+    return nearest_box_dist + nearest_goal_from_box_dist
 
 def h2(smap, goals, cfg):
     goals_l = list(goals)
@@ -98,7 +93,7 @@ def h2(smap, goals, cfg):
 
 def h3(smap, goals, cfg):
 
-    return "H3"
+    return len(cfg.boxes.difference(goals))
     
 heuristics = [
     {
