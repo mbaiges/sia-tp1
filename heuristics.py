@@ -118,21 +118,26 @@ def h4(smap, goals, cfg):
     return math.floor(s/2)
 
 def h5(smap, goals, cfg):
-    cmb = (0, 0)
-    cmg = (0, 0)
+    cmb_x = 0
+    cmb_y = 0
+    cmg_x = 0
+    cmg_y = 0
 
     for box in cfg.boxes:
-        cmb[0] += box.x
-        cmb[1] += box.y
+        cmb_x += box.x
+        cmb_y += box.y
 
     for goal in goals:
-        cmg[0] += goal.x
-        cmg[1] += goal.y
+        cmg_x += goal.x
+        cmg_y += goal.y
 
-    cmb[0] /= len(cfg.box)
-    cmg[1] /= len(goals)
+    cmb_x /= len(cfg.box)
+    cmb_y /= len(cfg.box)
 
-    return abs(cmb[0] - cmg[0]) + abs(cmb[1] - cmg[1])
+    cmg_x /= len(goals)
+    cmg_y /= len(goals)
+
+    return abs(cmb_x - cmg_x) + abs(cmb_y - cmg_y)
     
 heuristics = [
     {
