@@ -36,7 +36,6 @@ def iddfs(level, n, testall):
     known_nodes.put(first_node.config, first_node)
 
     nodes_processed = 0
-    n = 2
 
     # curr_n = n
 
@@ -116,7 +115,7 @@ def iddfs(level, n, testall):
 
     if won:
         path = build_path(node)
-        return process_results(won, testall, elapsed_time, smap, node, path, ALGORITHM_NAME, nodes_processed - 1, len(deque))
+        return process_results(won, testall, elapsed_time, smap, node, path, f"{ALGORITHM_NAME} (n='{n}')" , nodes_processed - 1, len(deque))
     else:
-        return process_results(won, testall, elapsed_time, smap, None, [], ALGORITHM_NAME, nodes_processed - 1, len(deque))
+        return process_results(won, testall, elapsed_time, smap, None, [], f"{ALGORITHM_NAME} (n='{n}')", nodes_processed - 1, len(deque))
 

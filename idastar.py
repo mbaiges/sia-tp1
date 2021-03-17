@@ -8,7 +8,8 @@ from sorted_list import OrderedList
 
 ALGORITHM_NAME = "Iterative Deepening A* (IDA*)"
             
-def idastar(level, h, testall):
+def idastar(level, heu, testall):
+    h=heu["func"]
     initial_time = datetime.now()
 
     smap = level.smap
@@ -102,7 +103,7 @@ def idastar(level, h, testall):
 
     if won:
         path = build_path(node)
-        return process_results(won, testall, elapsed_time, smap, node, path, ALGORITHM_NAME, nodes_processed - 1, len(q1) + len(q2))
+        return process_results(won, testall, elapsed_time, smap, node, path, f"{ALGORITHM_NAME} (h='{heu['name']}')", nodes_processed - 1, len(q1) + len(q2))
     else:
-        return process_results(won, testall, elapsed_time, smap, None, [], ALGORITHM_NAME, nodes_processed - 1, len(q1) + len(q2))
+        return process_results(won, testall, elapsed_time, smap, None, [], f"{ALGORITHM_NAME} (h='{heu['name']}')", nodes_processed - 1, len(q1) + len(q2))
 

@@ -25,7 +25,7 @@ def choose_heuristic():
         
     heu_chosen -= 1
 
-    return heuristics[heu_chosen]["func"]
+    return heuristics[heu_chosen]
 
 def BFS(level, testall):
     return bfs.bfs(level, testall)
@@ -47,7 +47,6 @@ def IDDFS(level, testall):
                 error()
             else:
                 n_selected = True
-
             try:
                 n_chosen = int(input("Please define N depth for IDDFS: "))
             except ValueError:
@@ -58,8 +57,8 @@ def IDDFS(level, testall):
 
 def GGS(level, testall):
     if(testall):
-        for h in range(0, len(heuristics)):
-            ggs.ggs(level, heuristics[h]["func"], testall)
+        for h in heuristics:
+            ggs.ggs(level, h, testall)
     else:   
         heuristic = choose_heuristic()
         ggs.ggs(level, heuristic, testall)
@@ -67,8 +66,8 @@ def GGS(level, testall):
     
 def AStar(level, testall):
     if(testall):
-        for h in range(0, len(heuristics)):
-            astar.astar(level, heuristics[h]["func"], testall)
+        for h in heuristics:
+            astar.astar(level, h, testall)
     else:   
         heuristic = choose_heuristic()
         astar.astar(level, heuristic, testall)
@@ -76,8 +75,8 @@ def AStar(level, testall):
 
 def IDAStar(level, testall):
     if(testall):
-        for h in range(0, len(heuristics)):
-            idastar.idastar(level, heuristics[h]["func"], testall)
+        for h in heuristics:
+            idastar.idastar(level, h, testall)
     else:   
         heuristic = choose_heuristic()
         idastar.idastar(level, heuristic, testall)

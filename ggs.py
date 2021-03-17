@@ -7,7 +7,10 @@ from sorted_list import OrderedList
 
 ALGORITHM_NAME = "Global Greedy Search (GGS)"
             
-def ggs(level, h, testall):
+def ggs(level, heu, testall):
+
+    h=heu["func"]
+
     initial_time = datetime.now()
 
     smap = level.smap
@@ -77,7 +80,7 @@ def ggs(level, h, testall):
 
     if won:
         path = build_path(node)
-        return process_results(won, testall, elapsed_time, smap, node, path, ALGORITHM_NAME, nodes_processed - 1, nodes_list.length())
+        return process_results(won, testall, elapsed_time, smap, node, path, f"{ALGORITHM_NAME} (h='{heu['name']}')", nodes_processed - 1, nodes_list.length())
     else:
-        return process_results(won, testall, elapsed_time, smap, None, [], ALGORITHM_NAME, nodes_processed - 1, nodes_list.length())
+        return process_results(won, testall, elapsed_time, smap, None, [], f"{ALGORITHM_NAME} (h='{heu['name']}')", nodes_processed - 1, nodes_list.length())
 
