@@ -114,7 +114,6 @@ def process_results(success, elapsed_time, smap, node, path, alg, proc_nodes_amt
         'time': elapsed_time,
         'result': success,
         'depth': len(path) - 1,
-        'cost': "Not implemented yet",
         'nodes expanded': proc_nodes_amt,
         'frontier nodes': front_nodes_amt,
         'solution': path
@@ -124,7 +123,6 @@ def process_results(success, elapsed_time, smap, node, path, alg, proc_nodes_amt
     print('Time: ', elapsed_time)
     print('Result: ', success_text)
     print('Depth: ',  len(path) - 1)
-    print('Cost: ', "Not implemented yet")
     print('Nodes expanded: ', proc_nodes_amt)
     print('Frontier nodes: ', front_nodes_amt)
     # print('Solution: ', path)
