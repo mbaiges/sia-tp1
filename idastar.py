@@ -103,7 +103,7 @@ def idastar(level, heu, testall):
 
     if won:
         path = build_path(node)
-        return process_results(won, testall, elapsed_time, smap, node, path, f"{ALGORITHM_NAME} (h='{heu['name']}')", nodes_processed - 1, len(q1) + len(q2))
+        return process_results(won, testall, elapsed_time, smap, node, path, f"{ALGORITHM_NAME} ({heu['name']})", nodes_processed - 1, len(q1) + len(q2))
     else:
-        return process_results(won, testall, elapsed_time, smap, None, [], f"{ALGORITHM_NAME} (h='{heu['name']}')", nodes_processed - 1, len(q1) + len(q2))
+        return process_results(won, testall, elapsed_time, smap, None, [], f"{ALGORITHM_NAME} ({heu['name']})", nodes_processed - 1, len(q1) + len(q2))
 

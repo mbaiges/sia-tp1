@@ -87,7 +87,7 @@ def astar(level, heu, testall):
 
     if won:
         path = build_path(node)
-        return process_results(won, testall, elapsed_time, smap, node, path, f"{ALGORITHM_NAME} (h='{heu['name']}')", nodes_processed - 1, nodes_list.length())
+        return process_results(won, testall, elapsed_time, smap, node, path, f"{ALGORITHM_NAME} ({heu['name']})", nodes_processed - 1, nodes_list.length())
     else:
-        return process_results(won, testall, elapsed_time, smap, None, [], f"{ALGORITHM_NAME} (h='{heu['name']}')", nodes_processed - 1, nodes_list.length())
+        return process_results(won, testall, elapsed_time, smap, None, [], f"{ALGORITHM_NAME} ({heu['name']})", nodes_processed - 1, nodes_list.length())
 

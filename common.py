@@ -111,7 +111,7 @@ def process_results(success, testall, elapsed_time, smap, node, path, alg, proc_
     
     results = {
         'algorithm': alg,
-        'time': elapsed_time,
+        'time': elapsed_time.total_seconds(),
         'result': success,
         'depth': len(path) - 1,
         'nodes expanded': proc_nodes_amt,
@@ -120,10 +120,10 @@ def process_results(success, testall, elapsed_time, smap, node, path, alg, proc_
     }
     
     if testall:
-        print(alg,',',elapsed_time,',',success_text,',',len(path) - 1,',',proc_nodes_amt,',',front_nodes_amt)
+        print(alg,',',elapsed_time.total_seconds(),',',success_text,',',len(path) - 1,',',proc_nodes_amt,',',front_nodes_amt)
     else:
         print('Algorithm: ', alg)
-        print('Time: ', elapsed_time)
+        print('Time: ', elapsed_time.total_seconds())
         print('Result: ', success_text)
         print('Depth: ',  len(path) - 1)
         print('Nodes expanded: ', proc_nodes_amt)
