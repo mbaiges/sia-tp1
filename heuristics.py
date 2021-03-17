@@ -131,8 +131,8 @@ def h5(smap, goals, cfg):
         cmg_x += goal.x
         cmg_y += goal.y
 
-    cmb_x /= len(cfg.box)
-    cmb_y /= len(cfg.box)
+    cmb_x /= len(cfg.boxes)
+    cmb_y /= len(cfg.boxes)
 
     cmg_x /= len(goals)
     cmg_y /= len(goals)
