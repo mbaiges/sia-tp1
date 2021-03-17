@@ -58,7 +58,7 @@ def IDDFS(level, testall):
 
 def GGS(level, testall):
     if(testall):
-        for h in [1,2,3,4,5]:
+        for h in range(0, len(heuristics)):
             ggs.ggs(level, heuristics[h]["func"], testall)
     else:   
         heuristic = choose_heuristic()
@@ -67,7 +67,7 @@ def GGS(level, testall):
     
 def AStar(level, testall):
     if(testall):
-        for h in [1,2,3,4,5]:
+        for h in range(0, len(heuristics)):
             astar.astar(level, heuristics[h]["func"], testall)
     else:   
         heuristic = choose_heuristic()
@@ -76,7 +76,7 @@ def AStar(level, testall):
 
 def IDAStar(level, testall):
     if(testall):
-        for h in [1,2,3,4,5]:
+        for h in range(0, len(heuristics)):
             idastar.idastar(level, heuristics[h]["func"], testall)
     else:   
         heuristic = choose_heuristic()

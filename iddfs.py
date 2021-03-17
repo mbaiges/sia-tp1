@@ -112,7 +112,7 @@ def iddfs(level, n, testall):
 
     elapsed_time = finish_time - initial_time
 
-    print(limit_nodes_per_n)
+    #print(limit_nodes_per_n)
 
     if won:
         path = build_path(node)
