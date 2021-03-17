@@ -19,7 +19,7 @@ pip install -r requirements.txt
 Finalmente, para correr el trabajo se debe ejecutar el comando:
 
 ```python
-python sokoban.py
+python .\sokoban.py
 ```
 
 Luego de esto, se pedirá que se elija el nivel, si se desea utilizar una optimización y el algoritmo a utilizar.
@@ -43,3 +43,25 @@ Las posibles heurísticas son:
 * Heurística 5:
 
     Devuelve la distancia entre el centro de masa de las cajas y el centro de masa de los objetivos
+
+Cuando finalmente se ejecuta un nivel, se abre el visualizador. Los controles para controlarlos son los siguientes:
+
+    → : Avanza al siguiente estado
+    ← : Retrocede al estado anterior
+    p : Inicia/pausa el avance de los estados de forma automatica
+    r : Reinicia el nivel
+    esc : cierra el nivel
+
+# Agregar un mapa
+Para agregar un mapa, se debe crear un archivo .txt en la carpeta levels y escribir el mapa donde cada caracter representa un cuadrado del tablero.
+Los caracteres a usar son los siguientes:
+
+    "#" : Pared
+    "$" : Caja
+    "@" : Jugador
+    "." : Objetivo
+    " " (espacio) : piso en blanco
+    "*" : Caja arriba de un goal
+    "+" : Player arriba de un goal
+
+
