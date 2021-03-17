@@ -105,13 +105,16 @@ def play(smap, path):
                 if event.key == pygame.K_ESCAPE:
                     game_over = True
                 if event.key == pygame.K_r:
+                    playing = not playing
                     current_idx = 0
                 if event.key == pygame.K_p:
                     playing = not playing
                 if event.key == pygame.K_LEFT:
+                    playing = not playing
                     if current_idx > 0:
                         current_idx -= 1
-                elif event.key == pygame.K_RIGHT: 
+                elif event.key == pygame.K_RIGHT:
+                    playing = not playing
                     if current_idx < len(path) - 1:
                         current_idx += 1
     

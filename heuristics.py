@@ -5,7 +5,6 @@ from hashing import HashTable
 from sorted_list import OrderedList
 
 def h1(smap, goals, cfg):
-
     nearest_box = None
     nearest_box_dist = 0
 
@@ -92,8 +91,48 @@ def h2(smap, goals, cfg):
     return bg_sum + nearest_box_dist
 
 def h3(smap, goals, cfg):
-
     return len(cfg.boxes.difference(goals))
+
+def h4(smap, goals, cfg):
+    x = [0 for a in range(0, smap.shape[0])]
+    y = [0 for a in range(0, smap.shape[1])]
+
+    for goal in goals:
+        x[goal.x] += 1
+        y[goal.y] += 1
+
+    for box in cfg.boxes:
+        x[box.x] -= 1
+        y[box.y] -= 1
+
+    s = 0
+
+    for a in x:
+        if a != 0:
+            s += 1
+
+    for b in y:
+        if b != 0:
+            s += 1
+
+    return math.floor(s/2)
+
+def h5(smap, goals, cfg):
+    cmb = (0, 0)
+    cmg = (0, 0)
+
+    for box in cfg.boxes:
+        cmb[0] += box.x
+        cmb[1] += box.y
+
+    for goal in goals:
+        cmg[0] += goal.x
+        cmg[1] += goal.y
+
+    cmb[0] /= len(cfg.box)
+    cmg[1] /= len(goals)
+
+    return abs(cmb[0] - cmg[0]) + abs(cmb[1] - cmg[1])
     
 heuristics = [
     {
@@ -108,4 +147,12 @@ heuristics = [
         "name": "Heuristic #3",
         "func": h3,
     },
+    {
+        "name": "Heuristic #4",
+        "func": h4,
+    },
+    {
+        "name": "Heuristic #5",
+        "func": h5,
+    }
 ]
