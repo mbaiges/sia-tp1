@@ -108,14 +108,12 @@ def h4(smap, goals, cfg):
     s = 0
 
     for a in x:
-        if a != 0:
-            s += 1
+        s += abs(a)
 
     for b in y:
-        if b != 0:
-            s += 1
+        s += abs(b)
 
-    return math.floor(s/2)
+    return s/2
 
 def h5(smap, goals, cfg):
     cmb_x = 0
