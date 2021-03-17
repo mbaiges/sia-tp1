@@ -27,41 +27,61 @@ def choose_heuristic():
 
     return heuristics[heu_chosen]["func"]
 
-def BFS(level):
-    return bfs.bfs(level)
+def BFS(level, testall):
+    return bfs.bfs(level, testall)
 
-def DFS(level):
-    return dfs.dfs(level)
+def DFS(level, testall):
+    return dfs.dfs(level, testall)
 
-def IDDFS(level):
+def IDDFS(level, testall):
     # prompt for n
 
-    n_selected = False
+    if(testall):
+        for n in [1, 2, 3, 5, 10, 20]:
+            iddfs.iddfs(level, n, testall)
+    else:
+        n_selected = False
 
-    while not n_selected:
-        if (n_selected):
-            error()
-        else:
-            n_selected = True
+        while not n_selected:
+            if (n_selected):
+                error()
+            else:
+                n_selected = True
 
-        try:
-            n_chosen = int(input("Please define N depth for IDDFS: "))
-        except ValueError:
-            n_chosen = -1
+            try:
+                n_chosen = int(input("Please define N depth for IDDFS: "))
+            except ValueError:
+                n_chosen = -1
 
-    return iddfs.iddfs(level, n_chosen)
+        iddfs.iddfs(level, n_chosen, testall)
+    return 1
 
-def GGS(level):
-    heuristic = choose_heuristic()
-    return ggs.ggs(level, heuristic)
+def GGS(level, testall):
+    if(testall):
+        for h in [1,2,3,4,5]:
+            ggs.ggs(level, heuristics[h]["func"], testall)
+    else:   
+        heuristic = choose_heuristic()
+        ggs.ggs(level, heuristic, testall)
+    return 1
+    
+def AStar(level, testall):
+    if(testall):
+        for h in [1,2,3,4,5]:
+            astar.astar(level, heuristics[h]["func"], testall)
+    else:   
+        heuristic = choose_heuristic()
+        astar.astar(level, heuristic, testall)
+    return 1
 
-def AStar(level):
-    heuristic = choose_heuristic()
-    return astar.astar(level, heuristic)
-
-def IDAStar(level):
-    heuristic = choose_heuristic()
-    return idastar.idastar(level, heuristic)
+def IDAStar(level, testall):
+    if(testall):
+        for h in [1,2,3,4,5]:
+            idastar.idastar(level, heuristics[h]["func"], testall)
+    else:   
+        heuristic = choose_heuristic()
+        idastar.idastar(level, heuristic, testall)
+    return 1
 
 algorithms = [
     {
@@ -87,5 +107,9 @@ algorithms = [
     {
         "name": idastar.ALGORITHM_NAME,
         "func": IDAStar,
+    },
+    {
+        "name": "Test all",
+        "funcs": [BFS, DFS, IDDFS, GGS, AStar, IDAStar],
     },
 ]

@@ -14,8 +14,8 @@ import common
 
 levels_folder = 'levels'
 
-def solve(level, alg):
-    return alg(level)
+def solve(level, alg, testall):
+    return alg(level, testall)
     
 def error():
 	print('Not a valid entry. Please try again')
@@ -96,14 +96,18 @@ def start_game():
         
     alg_chosen -= 1
 
-    print("All settled! Starting solving level '%s' with algorithm '%s'" % (levels[lvl_chosen].name, algorithms[alg_chosen]["name"]))
-
     lvl = levels[lvl_chosen]
-
     add_finish_boxes(levels[lvl_chosen])
 
-    solve(levels[lvl_chosen], algorithms[alg_chosen]["func"])
+    if(alg_chosen == 6):
+        print("Starting testing with all algorithms on map '%s' " % levels[lvl_chosen].name)
 
+        for func in algorithms[alg_chosen]["funcs"]:
+            solve(levels[lvl_chosen], func, True)
+
+    else:
+        print("All settled! Starting solving level '%s' with algorithm '%s'" % (levels[lvl_chosen].name, algorithms[alg_chosen]["name"]))
+        solve(levels[lvl_chosen], algorithms[alg_chosen]["func"], False)
 
 start_game()
 

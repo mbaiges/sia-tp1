@@ -6,7 +6,7 @@ from utils import *
 
 ALGORITHM_NAME = "Breadth First Search (BFS)"
             
-def bfs(level):
+def bfs(level, testall):
     initial_time = datetime.now()
 
     smap = level.smap
@@ -72,7 +72,7 @@ def bfs(level):
 
     if won:
         path = build_path(node)
-        return process_results(won, elapsed_time, smap, node, path, ALGORITHM_NAME, nodes_processed - 1, len(queue))
+        return process_results(won, testall, elapsed_time, smap, node, path, ALGORITHM_NAME, nodes_processed - 1, len(queue))
     else:
-        return process_results(won, elapsed_time, smap, None, [], ALGORITHM_NAME, nodes_processed - 1, len(queue))
+        return process_results(won, testall, elapsed_time, smap, None, [], ALGORITHM_NAME, nodes_processed - 1, len(queue))
 

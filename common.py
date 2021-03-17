@@ -100,7 +100,7 @@ def next_configs(config, smap):
 
     return configs
 
-def process_results(success, elapsed_time, smap, node, path, alg, proc_nodes_amt, front_nodes_amt):
+def process_results(success, testall, elapsed_time, smap, node, path, alg, proc_nodes_amt, front_nodes_amt):
     # for move in path:
     #     simple_printing(smap, move)
 
@@ -127,7 +127,7 @@ def process_results(success, elapsed_time, smap, node, path, alg, proc_nodes_amt
     print('Frontier nodes: ', front_nodes_amt)
     # print('Solution: ', path)
 
-    if success:
+    if success and not testall:
         visual.play(smap, path)
 
     return results

@@ -6,7 +6,7 @@ from utils import *
 
 ALGORITHM_NAME = "Depth First Search (DFS)"
             
-def dfs(level):
+def dfs(level, testall):
     initial_time = datetime.now()
 
     smap = level.smap
@@ -74,7 +74,7 @@ def dfs(level):
 
     if won:
         path = build_path(node)
-        return process_results(won, elapsed_time, smap, node, path, ALGORITHM_NAME, nodes_processed - 1, len(stack))
+        return process_results(won, testall, elapsed_time, smap, node, path, ALGORITHM_NAME, nodes_processed - 1, len(stack))
     else:
-        return process_results(won, elapsed_time, smap, None, [], ALGORITHM_NAME, nodes_processed - 1, len(stack))
+        return process_results(won, testall, elapsed_time, smap, None, [], ALGORITHM_NAME, nodes_processed - 1, len(stack))
 

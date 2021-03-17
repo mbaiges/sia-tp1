@@ -20,7 +20,7 @@ def build_path(node):
 
     return path
             
-def iddfs(level, n):
+def iddfs(level, n, testall):
     initial_time = datetime.now()
 
     smap = level.smap
@@ -116,7 +116,7 @@ def iddfs(level, n):
 
     if won:
         path = build_path(node)
-        return process_results(won, elapsed_time, smap, node, path, ALGORITHM_NAME, nodes_processed - 1, len(deque))
+        return process_results(won, testall, elapsed_time, smap, node, path, ALGORITHM_NAME, nodes_processed - 1, len(deque))
     else:
-        return process_results(won, elapsed_time, smap, None, [], ALGORITHM_NAME, nodes_processed - 1, len(deque))
+        return process_results(won, testall, elapsed_time, smap, None, [], ALGORITHM_NAME, nodes_processed - 1, len(deque))
 
