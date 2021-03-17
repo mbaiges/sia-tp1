@@ -8,6 +8,7 @@ import constants
 from algorithms import algorithms
 import level_parser
 from utils import *
+import common
 
 # definitions
 
@@ -57,6 +58,21 @@ def start_game():
     
     # determine level
     lvl_chosen -= 1
+
+    # prompt for optimization question
+
+    opt_selected = False
+    opt = ''
+
+    while not opt_selected or not (opt == 'n' or opt == 'y'):
+        if (opt_selected):
+            error()
+        else:
+            opt_selected = True
+
+        opt = input("Do you want to use optimizations? (y/n): ").lower()
+
+    common.optimize(opt == 'y')
 
     # prompt for algorithm
 

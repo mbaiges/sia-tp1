@@ -4,6 +4,13 @@ from utils import *
 import constants
 import visual
 
+optimize = True
+
+def optimize(opt):
+    global optimize
+
+    optimize = opt
+
 def finished(boxes, level):
     return boxes == level.goals
 
@@ -61,6 +68,7 @@ def next_configs(config, smap):
     configs = set()
 
     global directions
+    global optimize
 
     #por cada una de las 4 direcciones
     for (i, j) in directions:
@@ -71,7 +79,7 @@ def next_configs(config, smap):
             #si hay una caja
             if smap_wb[new_pos.x, new_pos.y] == constants.BOX:
                 #tengo que fijarme si una mas en la misma direccion hay o una pared o una caja
-                if smap_wb[player.x + 2*i, player.y + 2*j] != constants.WALL and smap_wb[player.x + 2*i, player.y + 2*j] != constants.BOX and (not box_becomes_immovable([player.x + 2*i, player.y + 2*j], smap) or smap_wb[player.x + 2*i, player.y + 2*j] == constants.GOAL):
+                if smap_wb[player.x + 2*i, player.y + 2*j] != constants.WALL and smap_wb[player.x + 2*i, player.y + 2*j] != constants.BOX and (not optimize or (not box_becomes_immovable([player.x + 2*i, player.y + 2*j], smap) or smap_wb[player.x + 2*i, player.y + 2*j] == constants.GOAL)):
                     # me fijo si la caja que movi quedo en una posicion inganable, de ser asi no se mete el caso
 
                     new_boxes = list(boxes)
