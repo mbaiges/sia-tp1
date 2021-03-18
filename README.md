@@ -1,6 +1,8 @@
-# sia-tp1
+# Trabajo Práctico Métodos Informados y Desinformados para la materia Sistemas de Inteligencia Artificial
 
-Para correr el programa debe ser necesario intalar python 3
+## Instalación
+
+Para correr el programa debe ser necesario instalar python 3
 
 [Descargar Python 3](https://www.python.org/downloads/)
 
@@ -15,6 +17,8 @@ Una vez instalado pip, se debe correr, dentro de la carpeta del repositorio, el 
 ```python
 pip install -r requirements.txt
 ```
+
+## Guía de uso
 
 Finalmente, para correr el trabajo se debe ejecutar el comando:
 
@@ -39,7 +43,7 @@ Las posibles heurísticas son:
     Se toma la cantidad de cajas que no se encuentran en un objetivo
 * Heurística 4:
 
-    Crea un vector para el eje x y otro para el eje y del estado. En este array se cuenta la cantidad de objetivos - cajas que hay en esta fila o columna. Al final devuelve la mitad de la cantidad de coordenadas de ambos arrays que sean distintos de cero 
+    Crea un vector para el eje x y otro para el eje y del estado. En este array se cuenta la cantidad de objetivos - cajas que hay en esta fila o columna. Al final devuelve la mitad de la suma de los modulos de los distintos elementos del array. 
 * Heurística 5:
 
     Devuelve la distancia entre el centro de masa de las cajas y el centro de masa de los objetivos
@@ -48,11 +52,11 @@ Cuando finalmente se ejecuta un nivel, se abre el visualizador. Los controles pa
 
     → : Avanza al siguiente estado
     ← : Retrocede al estado anterior
-    p : Inicia/pausa el avance de los estados de forma automatica
+    p : Inicia/pausa el avance de los estados de forma automática
     r : Reinicia el nivel
-    esc : cierra el nivel
+    esc : Cierra la ventana
 
-# Agregar un mapa
+## Agregar un mapa
 Para agregar un mapa, se debe crear un archivo .txt en la carpeta levels y escribir el mapa donde cada caracter representa un cuadrado del tablero.
 Los caracteres a usar son los siguientes:
 

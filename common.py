@@ -113,6 +113,7 @@ def process_results(success, testall, elapsed_time, smap, node, path, alg, proc_
         'algorithm': alg,
         'time': elapsed_time.total_seconds(),
         'result': success,
+        'cost': len(path) - 1,
         'depth': len(path) - 1,
         'nodes expanded': proc_nodes_amt,
         'frontier nodes': front_nodes_amt,
@@ -125,6 +126,7 @@ def process_results(success, testall, elapsed_time, smap, node, path, alg, proc_
         print('Algorithm: ', alg)
         print('Time: ', elapsed_time.total_seconds())
         print('Result: ', success_text)
+        print('Cost: ', len(path) - 1)
         print('Depth: ',  len(path) - 1)
         print('Nodes expanded: ', proc_nodes_amt)
         print('Frontier nodes: ', front_nodes_amt)
